@@ -104,7 +104,7 @@ int luaMagic_bind2Lua(lua_State* L, const char* name, RetType (func)(ArgTypes...
 
 /* Bind to Lua : WHILE return void */
 template<typename... ArgTypes>
-inline int luaMagic_bind2Lua(lua_State* L, const char* name, void (func)(ArgTypes...))
+int luaMagic_bind2Lua(lua_State* L, const char* name, void (func)(ArgTypes...))
 {
 	int (*bridgeFunc)(lua_State*) = [](lua_State* L) -> int 
 	{

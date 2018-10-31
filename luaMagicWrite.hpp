@@ -30,7 +30,7 @@ SOFTWARE.
 
 /* Write value to Lua */
 template<typename T>
-inline void luaMagic_write(lua_State* L, T value)
+void luaMagic_write(lua_State* L, T value)
 {
 	T* ptr = lua_newuserdata(L, sizeof(L));
 	T* object = new(ptr) T();

@@ -30,7 +30,7 @@ SOFTWARE.
 
 /* Read value from Lua */
 template<typename T>
-inline T luaMagic_read(lua_State* L, int index)
+T luaMagic_read(lua_State* L, int index)
 {
 	return lua_touserdata(L, index);
 }
