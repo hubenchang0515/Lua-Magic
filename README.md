@@ -7,8 +7,19 @@ template<typename T>
 int luaMagic_bind2Lua(lua_State* L, const char* name, T function);
 ```
 
-## Usage
+## Install
+```shell
+mkdir -p /usr/local/include/luaMagic
+cp luaMagic.hpp /usr/local/include/luaMagic/luaMagic.hpp
+cp luaMagicRead.hpp /usr/local/include/luaMagic/luaMagicRead.hpp
+cp luaMagicWrite.hpp /usr/local/include/luaMagic/luaMagicWrite.hpp
+```
 
+## Usage
+* Include
+```C++
+#include <luaMagic/luaMagic.hpp>
+```
 * Define your C function.
 ```C++
 int hello(const char* str, int x, double y)
