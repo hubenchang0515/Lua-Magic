@@ -1,5 +1,7 @@
 # Lua Magic
-Bind C functions to Lua automatically by variadic templates of C++ 11.  
+Bind C functions to Lua automatically by variadic templates of C++ .    
+* C++ 11  
+* Lua 5.3.5  
 
 ## API
 ```C++
