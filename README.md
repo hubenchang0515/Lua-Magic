@@ -41,6 +41,7 @@ luaMagic_bind2Lua(L, "hello", hello);
 ```C++
 #include "luaMagic.hpp"
 #include <cstring>
+#include <iostream>
 
 
 int luaMagic_load(lua_State* L);
@@ -97,13 +98,14 @@ void hello(const char* str, int x, double y)
 
 void commandLine(lua_State *L)
 {
-  while (1) 
-  {
-    char cmd[256];
+	while (1) 
+	{
+	char cmd[256];
 	printf(">> ");
-	gets_s(cmd,256);
+	std::cin.get(cmd,256);
+	getchar();
 	luaL_dostring(L, cmd);
-  }
+	}
 }
 ```
   
