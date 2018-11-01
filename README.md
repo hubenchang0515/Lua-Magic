@@ -97,9 +97,9 @@ int main(int argc,char* argv[])
 
 int luaMagic_load(lua_State* L)
 {
-	luaMagic_bind2Lua(L, "add", add);
-	luaMagic_bind2Lua(L, "upper", upper);
-	luaMagic_bind2Lua(L, "hello", hello);
+	luaMagic::bind(L, "add", add);
+	luaMagic::bind(L, "upper", upper);
+	luaMagic::bind(L, "hello", hello);
 }
 
 double add(double x, double y)
