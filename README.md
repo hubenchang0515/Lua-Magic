@@ -1,12 +1,19 @@
 # Lua Magic
-Bind C functions to Lua automatically by variadic templates of C++ .    
+Bind C functions to Lua automatically by variadic templates of C++ .  
+
+## Environment
 * C++ 11  
 * Lua 5.3.5  
 
+## Bind Matters
+* Override function must be indicated type.
+* Lambda funtion must not catch variable.
+* ``std::function`` is unsupported.
+
 ## API
 ```C++
-template<typename T>
-int luaMagic_bind2Lua(lua_State* L, const char* name, T function);
+int luaMagic::bind(lua_State* L, const char* name, T function);
+int luaMagicOverride<T>::bind()(lua_State* L, const char* name, T function);
 ```
 
 ## Install
@@ -22,6 +29,7 @@ cp luaMagicWrite.hpp /usr/local/include/luaMagic/luaMagicWrite.hpp
 ```C++
 #include <luaMagic/luaMagic.hpp>
 ```
+
 * Define your C function.
 ```C++
 int hello(const char* str, int x, double y)
@@ -29,10 +37,27 @@ int hello(const char* str, int x, double y)
 	printf("%s %d %lf\n", str, x, y);
 	return 0;
 }
+
+int add(int x, int y)
+{
+	printf("add int\n");
+	return x + y;
+}
+
+double add(double x, double y)
+{
+	printf("add double\n");
+	return x + y;
+}
 ```
+
 * The bind
 ```C++
-luaMagic_bind2Lua(L, "hello", hello);
+luaMagic::bind(L, "hello", hello);
+
+luaMagicOverride<int(int,int)>::bind(L, "intadd", add);
+
+luaMagicOverride<double(double,double)>::bind(L, "realadd", add);
 ```
 
 
