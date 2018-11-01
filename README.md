@@ -101,7 +101,7 @@ void commandLine(lua_State *L)
   {
     char cmd[256];
 	printf(">> ");
-	gets(cmd);
+	gets_s(cmd,256);
 	luaL_dostring(L, cmd);
   }
 }
