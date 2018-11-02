@@ -5,14 +5,17 @@ Bind C functions to Lua automatically by variadic templates of C++ .
 * C++ 11  
 * Lua 5.3.5  
 
-## Bind Matters
+## Notice
 * Override function must be indicated type.
 * Lambda funtion must not catch variable.
 * ``std::function`` is unsupported.
 
 ## API
 ```C++
+template<typename T>
 int luaMagic::bind(lua_State* L, const char* name, T function);
+
+template<typename T>
 int luaMagicOverride<T>::bind()(lua_State* L, const char* name, T function);
 ```
 
