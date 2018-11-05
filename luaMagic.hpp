@@ -153,7 +153,7 @@ public:
 	}
 	
 	/* Bind to Lua : WHILE parameter and return both void */
-	template<>
+	//template<>
 	static int bind(lua_State* L, const char* name, void (func)(void))
 	{
 		int (*bridgeFunc)(lua_State*) = [](lua_State* L) -> int 
