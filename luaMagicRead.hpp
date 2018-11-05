@@ -66,6 +66,30 @@ inline long long luaMagic_read<long long>(lua_State* L, int index)
 }
 
 template<>
+inline unsigned short luaMagic_read<unsigned short>(lua_State* L, int index)
+{
+	return luaL_checkinteger(L, index);
+}
+
+template<>
+inline unsigned int luaMagic_read<unsigned int>(lua_State* L, int index)
+{
+	return luaL_checkinteger(L, index);
+}
+
+template<>
+inline unsigned long luaMagic_read<unsigned long>(lua_State* L, int index)
+{
+	return luaL_checkinteger(L, index);
+}
+
+template<>
+inline unsigned long long luaMagic_read<unsigned long long>(lua_State* L, int index)
+{
+	return luaL_checkinteger(L, index);
+}
+
+template<>
 inline const char* luaMagic_read<const char*>(lua_State* L, int index)
 {
 	return luaL_checkstring(L, index);

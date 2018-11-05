@@ -69,6 +69,29 @@ inline void luaMagic_write<long long>(lua_State* L, long long value)
 	lua_pushinteger(L, value);
 }
 
+template<> 
+inline void luaMagic_write<unsigned short>(lua_State* L, unsigned short value)
+{
+	lua_pushinteger(L, value);
+}
+
+template<> 
+inline void luaMagic_write<unsigned int>(lua_State* L, unsigned int value)
+{
+	lua_pushinteger(L, value);
+}
+
+template<> 
+inline void luaMagic_write<unsigned long>(lua_State* L, unsigned long value)
+{
+	lua_pushinteger(L, value);
+}
+
+template<> 
+inline void luaMagic_write<unsigned long long>(lua_State* L, unsigned long long value)
+{
+	lua_pushinteger(L, value);
+}
 
 template<>
 inline void luaMagic_write<float>(lua_State* L, float value)
