@@ -46,6 +46,12 @@ inline void luaMagic_write<bool>(lua_State* L, bool value)
 }
 
 template<> 
+inline void luaMagic_write<char>(lua_State* L, char value)
+{
+	lua_pushinteger(L, value);
+}
+
+template<> 
 inline void luaMagic_write<short>(lua_State* L, short value)
 {
 	lua_pushinteger(L, value);
@@ -65,6 +71,12 @@ inline void luaMagic_write<long>(lua_State* L, long value)
 
 template<> 
 inline void luaMagic_write<long long>(lua_State* L, long long value)
+{
+	lua_pushinteger(L, value);
+}
+
+template<> 
+inline void luaMagic_write<unsigned char>(lua_State* L, unsigned char value)
 {
 	lua_pushinteger(L, value);
 }
