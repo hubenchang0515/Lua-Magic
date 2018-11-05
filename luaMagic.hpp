@@ -104,7 +104,30 @@ public:
 		
 		return 0;
 	}
-
+	
+	
+	/* Bind to Lua : WHILE no parameter */
+	template<typename RetType>
+	static int bind(lua_State* L, const char* name, RetType (func)(void))
+	{
+		int (*bridgeFunc)(lua_State*) = [](lua_State* L) -> int 
+		{
+			/* get the true funtion from closure */
+			RetType (*fp)(void) = reinterpret_cast<RetType (*)(void)>(lua_touserdata(L,lua_upvalueindex(1)));
+			luaMagic_write<RetType>(L, fp()); 
+			
+			return 1;
+		};
+		
+		/* func is a upvalue of bridge function   */
+		lua_pushlightuserdata(L, reinterpret_cast<void*>(func));
+		/* create a closure of function and set upvalue */
+		lua_pushcclosure(L, bridgeFunc, 1);
+		/* set the lua function name */
+		lua_setglobal(L, name);
+		
+		return 0;
+	}
 
 	/* Bind to Lua : WHILE return void */
 	template<typename... ArgTypes>
@@ -128,9 +151,43 @@ public:
 		
 		return 0;
 	}
+	
+	/* Bind to Lua : WHILE parameter and return both void */
+	template<>
+	static int bind(lua_State* L, const char* name, void (func)(void))
+	{
+		int (*bridgeFunc)(lua_State*) = [](lua_State* L) -> int 
+		{
+			/* get the true funtion from closure */
+			void (*fp)(void) = reinterpret_cast<void (*)(void)>(lua_touserdata(L,lua_upvalueindex(1)));
+			fp();
+			
+			return 0;
+		};
+		
+		/* func is a upvalue of bridge function   */
+		lua_pushlightuserdata(L, reinterpret_cast<void*>(func));
+		/* create a closure of function and set upvalue */
+		lua_pushcclosure(L, bridgeFunc, 1);
+		/* set the lua function name */
+		lua_setglobal(L, name);
+		
+		return 0;
+	}
+	
+	/* Bind variable */
+	template<typename T>
+	static int setValue(lua_State* L, const char* name, T value)
+	{
+		luaMagic_write<T>(L, value);
+		lua_setglobal(L, name);
+		return 0;
+	}
 
 };
 
+
+/* Bind override function */
 template<typename>
 class luaMagicOverride;
 
@@ -162,6 +219,34 @@ public:
 };
 
 
+template<typename RetType>
+class luaMagicOverride<RetType(void)>
+{
+public:
+
+	static int bind(lua_State* L, const char* name, RetType (func)(void))
+	{
+		int (*bridgeFunc)(lua_State*) = [](lua_State* L) -> int 
+		{
+			/* get the true funtion from closure */
+			RetType (*fp)(void) = reinterpret_cast<RetType (*)(void)>(lua_touserdata(L,lua_upvalueindex(1)));
+			luaMagic_write<RetType>(L, fp()); 
+			
+			return 1;
+		};
+		
+		/* func is a upvalue of bridge function   */
+		lua_pushlightuserdata(L, reinterpret_cast<void*>(func));
+		/* create a closure of function and set upvalue */
+		lua_pushcclosure(L, bridgeFunc, 1);
+		/* set the lua function name */
+		lua_setglobal(L, name);
+		
+		return 0;
+	}
+};
+
+
 template<typename... ArgTypes>
 class luaMagicOverride<void(ArgTypes...)>
 {
@@ -174,6 +259,34 @@ public:
 			/* get the true funtion from closure */
 			void (*fp)(ArgTypes...) = reinterpret_cast<void (*)(ArgTypes...)>(lua_touserdata(L,lua_upvalueindex(1)));
 			luaMagic_invoke(L, fp); 
+			
+			return 0;
+		};
+		
+		/* func is a upvalue of bridge function   */
+		lua_pushlightuserdata(L, reinterpret_cast<void*>(func));
+		/* create a closure of function and set upvalue */
+		lua_pushcclosure(L, bridgeFunc, 1);
+		/* set the lua function name */
+		lua_setglobal(L, name);
+		
+		return 0;
+	}
+};
+
+
+template<>
+class luaMagicOverride<void(void)>
+{
+public:
+	
+	static int bind(lua_State* L, const char* name, void (func)(void))
+	{
+		int (*bridgeFunc)(lua_State*) = [](lua_State* L) -> int 
+		{
+			/* get the true funtion from closure */
+			void (*fp)(void) = reinterpret_cast<void (*)(void)>(lua_touserdata(L,lua_upvalueindex(1)));
+			fp();
 			
 			return 0;
 		};
