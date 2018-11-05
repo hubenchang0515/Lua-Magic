@@ -13,6 +13,9 @@ Bind C functions to Lua automatically by variadic templates of C++ .
 ## API
 ```C++
 template<typename T>
+int luaMagic::setValue(lua_State* L, const char* name, T value);
+
+template<typename T>
 int luaMagic::bind(lua_State* L, const char* name, T function);
 
 template<typename T>
@@ -20,7 +23,7 @@ int luaMagicOverride<T>::bind()(lua_State* L, const char* name, T function);
 ```
 
 ## Install
-```shell
+```bash
 mkdir -p /usr/local/include/luaMagic
 cp luaMagic.hpp /usr/local/include/luaMagic/luaMagic.hpp
 cp luaMagicRead.hpp /usr/local/include/luaMagic/luaMagicRead.hpp
@@ -62,6 +65,19 @@ luaMagicOverride<int(int,int)>::bind(L, "intadd", add);
 
 luaMagicOverride<double(double,double)>::bind(L, "realadd", add);
 ```
+
+## Complex Type
+If using complex variable type like struct , you have to specialize ``luaMagic_read`` and ``luaMagic_write``.  
+```C++
+/* Read parameter from Lua */
+template<typename T>
+T luaMagic_read(lua_State* L, int index);
+
+/* Write return value to Lua */
+template<typename T>
+void luaMagic_write(lua_State* L, T value);
+```
+You can refer to [here](https://github.com/hubenchang0515/SDLuna)
 
 
 ## Demo
