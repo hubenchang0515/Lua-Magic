@@ -36,6 +36,12 @@ void luaMagic_write(lua_State* L, T value)
 	T* object = new(ptr) T();
 }
 
+template<typename T>
+void luaMagic_write(lua_State* L, T* value)
+{
+	lua_pushlightuserdata(L, value);
+}
+
 template<>
 inline void luaMagic_write<bool>(lua_State* L, bool value)
 {
