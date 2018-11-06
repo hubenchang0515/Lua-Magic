@@ -90,7 +90,7 @@ public:
 		{
 			/* get the true funtion from closure */
 			RetType (*fp)(ArgTypes...) = reinterpret_cast<RetType (*)(ArgTypes...)>(lua_touserdata(L,lua_upvalueindex(1)));
-			luaMagic_write<RetType>(L, luaMagic_invoke(L, fp)); 
+			luaMagic_write(L, luaMagic_invoke(L, fp)); 
 			
 			return 1;
 		};
@@ -114,7 +114,7 @@ public:
 		{
 			/* get the true funtion from closure */
 			RetType (*fp)(void) = reinterpret_cast<RetType (*)(void)>(lua_touserdata(L,lua_upvalueindex(1)));
-			luaMagic_write<RetType>(L, fp()); 
+			luaMagic_write(L, fp()); 
 			
 			return 1;
 		};
@@ -179,7 +179,7 @@ public:
 	template<typename T>
 	static int setValue(lua_State* L, const char* name, T value)
 	{
-		luaMagic_write<T>(L, value);
+		luaMagic_write(L, value);
 		lua_setglobal(L, name);
 		return 0;
 	}
@@ -202,7 +202,7 @@ public:
 		{
 			/* get the true funtion from closure */
 			RetType (*fp)(ArgTypes...) = reinterpret_cast<RetType (*)(ArgTypes...)>(lua_touserdata(L,lua_upvalueindex(1)));
-			luaMagic_write<RetType>(L, luaMagic_invoke(L, fp)); 
+			luaMagic_write(L, luaMagic_invoke(L, fp)); 
 			
 			return 1;
 		};
@@ -230,7 +230,7 @@ public:
 		{
 			/* get the true funtion from closure */
 			RetType (*fp)(void) = reinterpret_cast<RetType (*)(void)>(lua_touserdata(L,lua_upvalueindex(1)));
-			luaMagic_write<RetType>(L, fp()); 
+			luaMagic_write(L, fp()); 
 			
 			return 1;
 		};

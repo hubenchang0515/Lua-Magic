@@ -27,23 +27,24 @@ SOFTWARE.
 
 #include <lua.hpp>
 #include <functional>
+#include <string>
 
 /* Write value to Lua */
 template<typename T>
 void luaMagic_write(lua_State* L, T value)
 {
-	T* ptr = lua_newuserdata(L, sizeof(L));
+	T* ptr = static_cast<T*>(lua_newuserdata(L, sizeof(L)));
 	T* object = new(ptr) T();
 }
 
 template<typename T>
 void luaMagic_write(lua_State* L, T* value)
 {
-	lua_pushlightuserdata(L, value);
+	lua_pushlightuserdata(L, static_cast<void*>(value));
 }
 
 template<>
-inline void luaMagic_write<bool>(lua_State* L, bool value)
+inline void luaMagic_write(lua_State* L, bool value)
 {
 	if(value)
 		lua_pushboolean(L, 1);
@@ -52,88 +53,87 @@ inline void luaMagic_write<bool>(lua_State* L, bool value)
 }
 
 template<> 
-inline void luaMagic_write<char>(lua_State* L, char value)
+inline void luaMagic_write(lua_State* L, char value)
 {
 	lua_pushinteger(L, value);
 }
 
 template<> 
-inline void luaMagic_write<short>(lua_State* L, short value)
+inline void luaMagic_write(lua_State* L, short value)
 {
 	lua_pushinteger(L, value);
 }
 
 template<> 
-inline void luaMagic_write<int>(lua_State* L, int value)
+inline void luaMagic_write(lua_State* L, int value)
 {
 	lua_pushinteger(L, value);
 }
 
 template<> 
-inline void luaMagic_write<long>(lua_State* L, long value)
+inline void luaMagic_write(lua_State* L, long value)
 {
 	lua_pushinteger(L, value);
 }
 
 template<> 
-inline void luaMagic_write<long long>(lua_State* L, long long value)
+inline void luaMagic_write(lua_State* L, long long value)
 {
 	lua_pushinteger(L, value);
 }
 
 template<> 
-inline void luaMagic_write<unsigned char>(lua_State* L, unsigned char value)
+inline void luaMagic_write(lua_State* L, unsigned char value)
 {
 	lua_pushinteger(L, value);
 }
 
 template<> 
-inline void luaMagic_write<unsigned short>(lua_State* L, unsigned short value)
+inline void luaMagic_write(lua_State* L, unsigned short value)
 {
 	lua_pushinteger(L, value);
 }
 
 template<> 
-inline void luaMagic_write<unsigned int>(lua_State* L, unsigned int value)
+inline void luaMagic_write(lua_State* L, unsigned int value)
 {
 	lua_pushinteger(L, value);
 }
 
 template<> 
-inline void luaMagic_write<unsigned long>(lua_State* L, unsigned long value)
+inline void luaMagic_write(lua_State* L, unsigned long value)
 {
 	lua_pushinteger(L, value);
 }
 
 template<> 
-inline void luaMagic_write<unsigned long long>(lua_State* L, unsigned long long value)
+inline void luaMagic_write(lua_State* L, unsigned long long value)
 {
 	lua_pushinteger(L, value);
 }
 
 template<>
-inline void luaMagic_write<float>(lua_State* L, float value)
+inline void luaMagic_write(lua_State* L, float value)
 {
 	lua_pushnumber(L, value);
 }
 
 template<>
-inline void luaMagic_write<double>(lua_State* L, double value)
+inline void luaMagic_write(lua_State* L, double value)
 {
 	lua_pushnumber(L, value);
 }
 
 template<>
-inline void luaMagic_write<const char*>(lua_State* L, const char* value)
+inline void luaMagic_write(lua_State* L, const char* value)
 {
 	lua_pushstring(L, value);
 }
 
-
 template<>
-inline void luaMagic_write<void*>(lua_State* L, void* value)
+inline void luaMagic_write(lua_State* L, const std::string value)
 {
-	lua_pushlightuserdata(L, value);
+	lua_pushstring(L, value.c_str());
 }
 
 
