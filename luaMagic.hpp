@@ -84,7 +84,7 @@ class luaMagic
 public:
 
 	template<typename RetType, typename... ArgTypes>
-	static int bind(lua_State* L, const char* name, RetType (func)(ArgTypes...))
+	static int bind(lua_State* L, const char* name, RetType (func)(ArgTypes...), bool table = false)
 	{
 		int (*bridgeFunc)(lua_State*) = [](lua_State* L) -> int 
 		{
@@ -99,8 +99,17 @@ public:
 		lua_pushlightuserdata(L, reinterpret_cast<void*>(func));
 		/* create a closure of function and set upvalue */
 		lua_pushcclosure(L, bridgeFunc, 1);
-		/* set the lua function name */
-		lua_setglobal(L, name);
+		
+		/* TODO : hadn't been tested */
+		if(!table)
+		{
+			/* set the lua function name */
+			lua_setglobal(L, name);
+		}
+		else
+		{
+			lua_setfield(L, -2, name);
+		}
 		
 		return 0;
 	}
@@ -108,7 +117,7 @@ public:
 	
 	/* Bind to Lua : WHILE no parameter */
 	template<typename RetType>
-	static int bind(lua_State* L, const char* name, RetType (func)(void))
+	static int bind(lua_State* L, const char* name, RetType (func)(void), bool table = false)
 	{
 		int (*bridgeFunc)(lua_State*) = [](lua_State* L) -> int 
 		{
@@ -123,15 +132,24 @@ public:
 		lua_pushlightuserdata(L, reinterpret_cast<void*>(func));
 		/* create a closure of function and set upvalue */
 		lua_pushcclosure(L, bridgeFunc, 1);
-		/* set the lua function name */
-		lua_setglobal(L, name);
+		
+		/* TODO : hadn't been tested */
+		if(!table)
+		{
+			/* set the lua function name */
+			lua_setglobal(L, name);
+		}
+		else
+		{
+			lua_setfield(L, -2, name);
+		}
 		
 		return 0;
 	}
 
 	/* Bind to Lua : WHILE return void */
 	template<typename... ArgTypes>
-	static int bind(lua_State* L, const char* name, void (func)(ArgTypes...))
+	static int bind(lua_State* L, const char* name, void (func)(ArgTypes...), bool table = false)
 	{
 		int (*bridgeFunc)(lua_State*) = [](lua_State* L) -> int 
 		{
@@ -146,15 +164,24 @@ public:
 		lua_pushlightuserdata(L, reinterpret_cast<void*>(func));
 		/* create a closure of function and set upvalue */
 		lua_pushcclosure(L, bridgeFunc, 1);
-		/* set the lua function name */
-		lua_setglobal(L, name);
+		
+		/* TODO : hadn't been tested */
+		if(!table)
+		{
+			/* set the lua function name */
+			lua_setglobal(L, name);
+		}
+		else
+		{
+			lua_setfield(L, -2, name);
+		}
 		
 		return 0;
 	}
 	
 	/* Bind to Lua : WHILE parameter and return both void */
 	//template<>
-	static int bind(lua_State* L, const char* name, void (func)(void))
+	static int bind(lua_State* L, const char* name, void (func)(void), bool table = false)
 	{
 		int (*bridgeFunc)(lua_State*) = [](lua_State* L) -> int 
 		{
@@ -169,18 +196,33 @@ public:
 		lua_pushlightuserdata(L, reinterpret_cast<void*>(func));
 		/* create a closure of function and set upvalue */
 		lua_pushcclosure(L, bridgeFunc, 1);
-		/* set the lua function name */
-		lua_setglobal(L, name);
+		if(!table)
+		{
+			/* set the lua function name */
+			lua_setglobal(L, name);
+		}
+		else
+		{
+			lua_setfield(L, -2, name);
+		}
 		
 		return 0;
 	}
 	
 	/* Bind variable */
 	template<typename T>
-	static int setValue(lua_State* L, const char* name, T value)
+	static int setValue(lua_State* L, const char* name, T value, bool table = false)
 	{
 		luaMagic_write(L, value);
-		lua_setglobal(L, name);
+		if(!table)
+		{
+			/* set the lua function name */
+			lua_setglobal(L, name);
+		}
+		else
+		{
+			lua_setfield(L, -2, name);
+		}
 		return 0;
 	}
 
@@ -196,7 +238,7 @@ class luaMagicOverride<RetType(ArgTypes...)>
 {
 public:
 
-	static int bind(lua_State* L, const char* name, RetType (func)(ArgTypes...))
+	static int bind(lua_State* L, const char* name, RetType (func)(ArgTypes...), bool table = false)
 	{
 		int (*bridgeFunc)(lua_State*) = [](lua_State* L) -> int 
 		{
@@ -211,8 +253,15 @@ public:
 		lua_pushlightuserdata(L, reinterpret_cast<void*>(func));
 		/* create a closure of function and set upvalue */
 		lua_pushcclosure(L, bridgeFunc, 1);
-		/* set the lua function name */
-		lua_setglobal(L, name);
+		if(!table)
+		{
+			/* set the lua function name */
+			lua_setglobal(L, name);
+		}
+		else
+		{
+			lua_setfield(L, -2, name);
+		}
 		
 		return 0;
 	}
@@ -224,7 +273,7 @@ class luaMagicOverride<RetType(void)>
 {
 public:
 
-	static int bind(lua_State* L, const char* name, RetType (func)(void))
+	static int bind(lua_State* L, const char* name, RetType (func)(void), bool table = false)
 	{
 		int (*bridgeFunc)(lua_State*) = [](lua_State* L) -> int 
 		{
@@ -239,8 +288,15 @@ public:
 		lua_pushlightuserdata(L, reinterpret_cast<void*>(func));
 		/* create a closure of function and set upvalue */
 		lua_pushcclosure(L, bridgeFunc, 1);
-		/* set the lua function name */
-		lua_setglobal(L, name);
+		if(!table)
+		{
+			/* set the lua function name */
+			lua_setglobal(L, name);
+		}
+		else
+		{
+			lua_setfield(L, -2, name);
+		}
 		
 		return 0;
 	}
@@ -252,7 +308,7 @@ class luaMagicOverride<void(ArgTypes...)>
 {
 public:
 	
-	static int bind(lua_State* L, const char* name, void (func)(ArgTypes...))
+	static int bind(lua_State* L, const char* name, void (func)(ArgTypes...), bool table = false)
 	{
 		int (*bridgeFunc)(lua_State*) = [](lua_State* L) -> int 
 		{
@@ -267,8 +323,15 @@ public:
 		lua_pushlightuserdata(L, reinterpret_cast<void*>(func));
 		/* create a closure of function and set upvalue */
 		lua_pushcclosure(L, bridgeFunc, 1);
-		/* set the lua function name */
-		lua_setglobal(L, name);
+		if(!table)
+		{
+			/* set the lua function name */
+			lua_setglobal(L, name);
+		}
+		else
+		{
+			lua_setfield(L, -2, name);
+		}
 		
 		return 0;
 	}
@@ -280,7 +343,7 @@ class luaMagicOverride<void(void)>
 {
 public:
 	
-	static int bind(lua_State* L, const char* name, void (func)(void))
+	static int bind(lua_State* L, const char* name, void (func)(void), bool table = false)
 	{
 		int (*bridgeFunc)(lua_State*) = [](lua_State* L) -> int 
 		{
@@ -295,8 +358,15 @@ public:
 		lua_pushlightuserdata(L, reinterpret_cast<void*>(func));
 		/* create a closure of function and set upvalue */
 		lua_pushcclosure(L, bridgeFunc, 1);
-		/* set the lua function name */
-		lua_setglobal(L, name);
+		if(!table)
+		{
+			/* set the lua function name */
+			lua_setglobal(L, name);
+		}
+		else
+		{
+			lua_setfield(L, -2, name);
+		}
 		
 		return 0;
 	}

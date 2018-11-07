@@ -13,13 +13,13 @@ Bind C functions to Lua automatically by variadic templates of C++ .
 ## API
 ```C++
 template<typename T>
-int luaMagic::setValue(lua_State* L, const char* name, T value);
+int luaMagic::setValue(lua_State* L, const char* name, T value, bool table = false);
 
 template<typename T>
-int luaMagic::bind(lua_State* L, const char* name, T function);
+int luaMagic::bind(lua_State* L, const char* name, T function, bool table = false);
 
 template<typename T>
-int luaMagicOverride<T>::bind()(lua_State* L, const char* name, T function);
+int luaMagicOverride<T>::bind()(lua_State* L, const char* name, T function, bool table = false);
 ```
 
 ## Install
@@ -57,13 +57,26 @@ double add(double x, double y)
 }
 ```
 
-* The bind
+* The bind to global
 ```C++
 luaMagic::bind(L, "hello", hello);
 
 luaMagicOverride<int(int,int)>::bind(L, "intadd", add);
 
 luaMagicOverride<double(double,double)>::bind(L, "realadd", add);
+```
+
+* Or bind to table
+```C++
+lua_newtable(L);
+
+luaMagic::bind(L, "hello", hello, true);
+
+luaMagicOverride<int(int,int)>::bind(L, "intadd", add, true);
+
+luaMagicOverride<double(double,double)>::bind(L, "realadd", add, true);
+
+lua_setglobal(L, "tablename");
 ```
 
 ## Complex Type
