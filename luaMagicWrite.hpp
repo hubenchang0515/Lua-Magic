@@ -40,7 +40,10 @@ void luaMagic_write(lua_State* L, T value)
 template<typename T>
 void luaMagic_write(lua_State* L, T* value)
 {
-	lua_pushlightuserdata(L, static_cast<void*>(value));
+	if(value == nullptr)
+		lua_pushnil(L);
+	else
+		lua_pushlightuserdata(L, static_cast<void*>(value));
 }
 
 template<>
