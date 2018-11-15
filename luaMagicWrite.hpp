@@ -34,6 +34,10 @@ template<typename T>
 void luaMagic_write(lua_State* L, T value)
 {
 	T* ptr = static_cast<T*>(lua_newuserdata(L, sizeof(L)));
+	if(ptr == nullptr)
+	{
+		lua_pushnil(L);
+	}
 	T* object = new(ptr) T();
 }
 

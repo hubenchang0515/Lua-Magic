@@ -32,7 +32,10 @@ SOFTWARE.
 template<typename T>
 T luaMagic_read(lua_State* L, int index)
 {
-	return static_cast<T>(lua_touserdata(L, index));
+	if(lua_isnoneornil(L, index))
+		return nullptr;
+	else
+		return static_cast<T>(lua_touserdata(L, index));
 }
 
 template<>
