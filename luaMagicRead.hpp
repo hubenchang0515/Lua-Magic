@@ -47,62 +47,62 @@ inline bool luaMagic_read<bool>(lua_State* L, int index)
 template<>
 inline char luaMagic_read<char>(lua_State* L, int index)
 {
-	return luaL_checkinteger(L, index);
+	return static_cast<char>(luaL_checkinteger(L, index));
 }
 
 
 template<>
 inline short luaMagic_read<short>(lua_State* L, int index)
 {
-	return luaL_checkinteger(L, index);
+	return static_cast<short>(luaL_checkinteger(L, index));
 }
 
 template<>
 inline int luaMagic_read<int>(lua_State* L, int index)
 {
-	return luaL_checkinteger(L, index);
+	return static_cast<int>(luaL_checkinteger(L, index));
 }
 
 template<>
 inline long luaMagic_read<long>(lua_State* L, int index)
 {
-	return luaL_checkinteger(L, index);
+	return static_cast<long>(luaL_checkinteger(L, index));
 }
 
 template<>
 inline long long luaMagic_read<long long>(lua_State* L, int index)
 {
-	return luaL_checkinteger(L, index);
+	return static_cast<long long>(luaL_checkinteger(L, index));
 }
 
 template<>
 inline unsigned char luaMagic_read<unsigned char>(lua_State* L, int index)
 {
-	return luaL_checkinteger(L, index);
+	return static_cast<unsigned char>(luaL_checkinteger(L, index));
 }
 
 template<>
 inline unsigned short luaMagic_read<unsigned short>(lua_State* L, int index)
 {
-	return luaL_checkinteger(L, index);
+	return static_cast<unsigned short>(luaL_checkinteger(L, index));
 }
 
 template<>
 inline unsigned int luaMagic_read<unsigned int>(lua_State* L, int index)
 {
-	return luaL_checkinteger(L, index);
+	return static_cast<unsigned int>(luaL_checkinteger(L, index));
 }
 
 template<>
 inline unsigned long luaMagic_read<unsigned long>(lua_State* L, int index)
 {
-	return luaL_checkinteger(L, index);
+	return static_cast<unsigned long>(luaL_checkinteger(L, index));
 }
 
 template<>
 inline unsigned long long luaMagic_read<unsigned long long>(lua_State* L, int index)
 {
-	return luaL_checkinteger(L, index);
+	return static_cast<unsigned long long>(luaL_checkinteger(L, index));
 }
 
 template<>
@@ -114,13 +114,13 @@ inline const char* luaMagic_read<const char*>(lua_State* L, int index)
 template<>
 inline float luaMagic_read<float>(lua_State* L, int index)
 {
-	return luaL_checknumber(L, index);
+	return static_cast<float>(luaL_checknumber(L, index));
 }
 
 template<>
 inline double luaMagic_read<double>(lua_State* L, int index)
 {
-	return luaL_checknumber(L, index);
+	return static_cast<double>(luaL_checknumber(L, index));
 }
 
 #endif

@@ -62,73 +62,73 @@ inline void luaMagic_write(lua_State* L, bool value)
 template<> 
 inline void luaMagic_write(lua_State* L, char value)
 {
-	lua_pushinteger(L, value);
+	lua_pushinteger(L, static_cast<lua_Integer>(value));
 }
 
 template<> 
 inline void luaMagic_write(lua_State* L, short value)
 {
-	lua_pushinteger(L, value);
+	lua_pushinteger(L, static_cast<lua_Integer>(value));
 }
 
 template<> 
 inline void luaMagic_write(lua_State* L, int value)
 {
-	lua_pushinteger(L, value);
+	lua_pushinteger(L, static_cast<lua_Integer>(value));
 }
 
 template<> 
 inline void luaMagic_write(lua_State* L, long value)
 {
-	lua_pushinteger(L, value);
+	lua_pushinteger(L, static_cast<lua_Integer>(value));
 }
 
 template<> 
 inline void luaMagic_write(lua_State* L, long long value)
 {
-	lua_pushinteger(L, value);
+	lua_pushinteger(L, static_cast<lua_Integer>(value));
 }
 
 template<> 
 inline void luaMagic_write(lua_State* L, unsigned char value)
 {
-	lua_pushinteger(L, value);
+	lua_pushinteger(L, static_cast<lua_Integer>(value));
 }
 
 template<> 
 inline void luaMagic_write(lua_State* L, unsigned short value)
 {
-	lua_pushinteger(L, value);
+	lua_pushinteger(L, static_cast<lua_Integer>(value));
 }
 
 template<> 
 inline void luaMagic_write(lua_State* L, unsigned int value)
 {
-	lua_pushinteger(L, value);
+	lua_pushinteger(L, static_cast<lua_Integer>(value));
 }
 
 template<> 
 inline void luaMagic_write(lua_State* L, unsigned long value)
 {
-	lua_pushinteger(L, value);
+	lua_pushinteger(L, static_cast<lua_Integer>(value));
 }
 
 template<> 
 inline void luaMagic_write(lua_State* L, unsigned long long value)
 {
-	lua_pushinteger(L, value);
+	lua_pushinteger(L, static_cast<lua_Integer>(value));
 }
 
 template<>
 inline void luaMagic_write(lua_State* L, float value)
 {
-	lua_pushnumber(L, value);
+	lua_pushnumber(L, static_cast<lua_Number>(value));
 }
 
 template<>
 inline void luaMagic_write(lua_State* L, double value)
 {
-	lua_pushnumber(L, value);
+	lua_pushnumber(L, static_cast<lua_Number>(value));
 }
 
 template<>
